@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+
+<head>
+
+ 
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>Bean & Brew — Modifier un produit</title>
+
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='add_product.css') }}"
+>
+ 
+
+</head>
+
+<body>
+
+<header class="header">
+
+ 
+<nav class="navbar">
+
+    <a
+        href="{{ url_for('home') }}"
+        class="logo"
+    >
+        Bean<span>&</span>Brew
+    </a>
+
+
+    <div class="navigation">
+
+        <a
+            href="{{ url_for('seller') }}"
+            class="back-link"
+        >
+            ← Dashboard
+        </a>
+
+
+        <a
+            href="{{ url_for('logout') }}"
+            class="logout-button"
+        >
+            Déconnexion
+        </a>
+
+    </div>
+
+</nav>
+ 
+
+</header>
+
+<main class="page">
+
+ 
+<section class="form-container">
+
+
+    <div class="form-header">
+
+        <p class="eyebrow">
+            Gestion du menu
+        </p>
+
+
+        <h1>
+            Modifier le produit
+        </h1>
+
+
+        <p>
+            Modifiez les informations de votre produit.
+        </p>
+
+    </div>
+
+
+    {% if error %}
+
+    <div class="error-message">
+        {{ error }}
+    </div>
+
+    {% endif %}
+
+
+    <form
+        action="{{ url_for(
+            'edit_product',
+            product_id=product.id
+        ) }}"
+        method="POST"
+        class="product-form"
+    >
+
+
+        <!-- NOM -->
+
+        <div class="form-group">
+
+            <label for="name">
+                Nom du produit
+            </label>
+
+
+            <input
+                type="text"
+                id="name"
+                name="name"
+                value="{{ product.name }}"
+                maxlength="100"
+                required
+            >
+
+        </div>
+
+
+        <!-- DESCRIPTION -->
+
+        <div class="form-group">
+
+            <label for="description">
+                Description
+            </label>
+
+
+            <textarea
+                id="description"
+                name="description"
+                rows="5"
+            >{{ product.description or "" }}</textarea>
+
+        </div>
+
+
+        <!-- PRIX + CATÉGORIE -->
+
+        <div class="form-row">
+
+
+            <div class="form-group">
+
+                <label for="price">
+                    Prix
+                </label>
+
+
+                <div class="price-input">
+
+                    <input
+                        type="number"
+                        id="price"
+                        name="price"
+                        value="{{ product.price }}"
+                        min="0"
+                        step="0.01"
+                        required
+                    >
+
+
+                    <span>
+                        €
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="category_id">
+                    Catégorie
+                </label>
+
+
+                <select
+                    id="category_id"
+                    name="category_id"
+                    required
+                >
+
+
+                    {% for category in categories %}
+
+                    <option
+                        value="{{ category.id }}"
+                        {% if category.id == product.category_id %}
+                            selected
+                        {% endif %}
+                    >
+                        {{ category.name }}
+                    </option>
+
+                    {% endfor %}
+
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <!-- IMAGE -->
+
+        <div class="form-group">
+
+            <label for="image">
+                URL de l'image
+            </label>
+
+
+            <input
+                type="url"
+                id="image"
+                name="image"
+                value="{{ product.image or '' }}"
+                placeholder="https://exemple.com/image.jpg"
+            >
+
+
+            <small>
+                Vous pouvez conserver l'image actuelle
+                ou la remplacer.
+            </small>
+
+        </div>
+
+
+        <!-- BOUTONS -->
+
+        <div class="form-actions">
+
+
+            <a
+                href="{{ url_for('seller') }}"
+                class="cancel-button"
+            >
+                Annuler
+            </a>
+
+
+            <button
+                type="submit"
+                class="submit-button"
+            >
+                Enregistrer les modifications
+            </button>
+
+        </div>
+
+
+    </form>
+
+
+</section>
+ 
+
+</main>
+
+<footer>
+
+ 
+<p>
+    © 2026 Bean & Brew — Espace vendeur
+</p>
+ 
+
+</footer>
+
+</body>
+
+</html>

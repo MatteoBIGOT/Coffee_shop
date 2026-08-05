@@ -1,0 +1,337 @@
+/* ==================================================
+RESET
+================================================== */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  }
+
+body {
+
+ 
+font-family: Arial, sans-serif;
+
+background: #f7f3ef;
+
+color: #2f2119;
+ 
+
+}
+
+/* ==================================================
+PAGE
+================================================== */
+
+.register-page {
+
+ 
+min-height: 100vh;
+
+display: flex;
+
+align-items: center;
+
+justify-content: center;
+
+padding: 40px 20px;
+ 
+
+}
+
+.register-container {
+
+ 
+width: 100%;
+
+max-width: 460px;
+ 
+
+}
+
+/* ==================================================
+LOGO
+================================================== */
+
+.logo {
+
+ 
+display: block;
+
+width: fit-content;
+
+margin: 0 auto 30px;
+
+color: #2f2119;
+
+text-decoration: none;
+
+font-size: 1.8rem;
+
+font-weight: 700;
+
+letter-spacing: -1px;
+ 
+
+}
+
+.logo span {
+
+ 
+color: #b8794a;
+ 
+
+}
+
+/* ==================================================
+CARD
+================================================== */
+
+.register-card {
+
+ 
+background: white;
+
+padding: 40px;
+
+border-radius: 12px;
+
+box-shadow:
+    0 10px 35px rgba(47, 33, 25, 0.08);
+ 
+
+}
+
+/* ==================================================
+TITRE
+================================================== */
+
+.eyebrow {
+
+ 
+margin-bottom: 10px;
+
+color: #b8794a;
+
+font-size: 0.8rem;
+
+font-weight: 700;
+
+text-transform: uppercase;
+
+letter-spacing: 1.5px;
+ 
+
+}
+
+h1 {
+
+ 
+margin-bottom: 12px;
+
+font-size: 2rem;
+ 
+
+}
+
+.register-description {
+
+ 
+margin-bottom: 30px;
+
+color: #766960;
+
+line-height: 1.6;
+ 
+
+}
+
+/* ==================================================
+ERREUR
+================================================== */
+
+.error-message {
+
+ 
+margin-bottom: 20px;
+
+padding: 12px 15px;
+
+border-radius: 6px;
+
+background: #fbeaea;
+
+color: #a33a3a;
+
+font-size: 0.9rem;
+ 
+
+}
+
+/* ==================================================
+FORMULAIRE
+================================================== */
+
+.form-group {
+
+ 
+margin-bottom: 20px;
+ 
+
+}
+
+.form-group label {
+
+ 
+display: block;
+
+margin-bottom: 8px;
+
+font-size: 0.9rem;
+
+font-weight: 600;
+ 
+
+}
+
+.form-group input {
+
+ 
+width: 100%;
+
+padding: 13px 14px;
+
+border: 1px solid #ddd3cc;
+
+border-radius: 6px;
+
+background: #fff;
+
+color: #2f2119;
+
+font-size: 1rem;
+
+outline: none;
+
+transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+ 
+
+}
+
+.form-group input:focus {
+
+ 
+border-color: #b8794a;
+
+box-shadow:
+    0 0 0 3px rgba(184, 121, 74, 0.12);
+ 
+
+}
+
+/* ==================================================
+BOUTON
+================================================== */
+
+.register-button {
+
+ 
+width: 100%;
+
+margin-top: 5px;
+
+padding: 14px 20px;
+
+border: none;
+
+border-radius: 6px;
+
+background: #2f2119;
+
+color: white;
+
+font-size: 1rem;
+
+font-weight: 600;
+
+cursor: pointer;
+
+transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+ 
+
+}
+
+.register-button:hover {
+
+ 
+opacity: 0.9;
+
+transform: translateY(-1px);
+ 
+
+}
+
+/* ==================================================
+LIEN LOGIN
+================================================== */
+
+.login-link {
+
+ 
+margin-top: 25px;
+
+text-align: center;
+
+color: #766960;
+
+font-size: 0.9rem;
+ 
+
+}
+
+.login-link a {
+
+ 
+color: #b8794a;
+
+font-weight: 600;
+
+text-decoration: none;
+ 
+
+}
+
+.login-link a:hover {
+
+ 
+text-decoration: underline;
+ 
+
+}
+
+/* ==================================================
+MOBILE
+================================================== */
+
+@media (max-width: 500px) {
+
+ 
+.register-card {
+
+    padding: 30px 20px;
+
+}
+
+h1 {
+
+    font-size: 1.7rem;
+
+}
+ 
+
+}

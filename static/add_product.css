@@ -1,0 +1,575 @@
+/* =========================================================
+RESET
+========================================================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  }
+
+body {
+
+ 
+font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+background: #f7f3ef;
+
+color: #2f2119;
+
+line-height: 1.6;
+
+min-height: 100vh;
+
+display: flex;
+
+flex-direction: column;
+ 
+
+}
+
+/* =========================================================
+HEADER
+========================================================= */
+
+.header {
+
+ 
+background: rgba(255, 255, 255, 0.96);
+
+border-bottom: 1px solid #e8ded7;
+ 
+
+}
+
+.navbar {
+
+ 
+max-width: 1200px;
+
+margin: auto;
+
+padding: 18px 25px;
+
+display: flex;
+
+align-items: center;
+
+justify-content: space-between;
+
+gap: 25px;
+ 
+
+}
+
+/* LOGO */
+
+.logo {
+
+ 
+color: #2f2119;
+
+text-decoration: none;
+
+font-size: 1.6rem;
+
+font-weight: 700;
+ 
+
+}
+
+.logo span {
+
+ 
+color: #b8794a;
+ 
+
+}
+
+/* NAVIGATION */
+
+.navigation {
+
+ 
+display: flex;
+
+align-items: center;
+
+gap: 15px;
+ 
+
+}
+
+.back-link {
+
+ 
+color: #2f2119;
+
+text-decoration: none;
+
+font-size: 0.9rem;
+
+font-weight: 600;
+
+transition: color 0.2s ease;
+ 
+
+}
+
+.back-link:hover {
+
+ 
+color: #b8794a;
+ 
+
+}
+
+.logout-button {
+
+ 
+padding: 9px 15px;
+
+border-radius: 6px;
+
+background: #2f2119;
+
+color: white;
+
+text-decoration: none;
+
+font-size: 0.85rem;
+
+font-weight: 600;
+ 
+
+}
+
+/* =========================================================
+PAGE
+========================================================= */
+
+.page {
+
+ 
+flex: 1;
+
+padding: 70px 20px 100px;
+ 
+
+}
+
+.form-container {
+
+ 
+width: 100%;
+
+max-width: 700px;
+
+margin: auto;
+
+padding: 45px;
+
+background: white;
+
+border: 1px solid #e8ded7;
+
+border-radius: 14px;
+
+box-shadow:
+    0 10px 35px rgba(47, 33, 25, 0.07);
+ 
+
+}
+
+/* =========================================================
+HEADER FORMULAIRE
+========================================================= */
+
+.form-header {
+
+ 
+margin-bottom: 35px;
+ 
+
+}
+
+.eyebrow {
+
+ 
+margin-bottom: 8px;
+
+color: #b8794a;
+
+font-size: 0.8rem;
+
+font-weight: 700;
+
+text-transform: uppercase;
+
+letter-spacing: 1.5px;
+ 
+
+}
+
+.form-header h1 {
+
+ 
+margin-bottom: 10px;
+
+font-size: 2.4rem;
+
+line-height: 1.15;
+ 
+
+}
+
+.form-header p:last-child {
+
+ 
+color: #766960;
+ 
+
+}
+
+/* =========================================================
+ERREUR
+========================================================= */
+
+.error-message {
+
+ 
+margin-bottom: 25px;
+
+padding: 13px 16px;
+
+border-radius: 7px;
+
+background: #f8dddd;
+
+color: #963d3d;
+
+border: 1px solid #edcaca;
+
+font-size: 0.9rem;
+ 
+
+}
+
+/* =========================================================
+FORMULAIRE
+========================================================= */
+
+.product-form {
+
+ 
+display: flex;
+
+flex-direction: column;
+
+gap: 22px;
+ 
+
+}
+
+.form-group {
+
+ 
+display: flex;
+
+flex-direction: column;
+
+gap: 7px;
+ 
+
+}
+
+.form-group label {
+
+ 
+font-size: 0.85rem;
+
+font-weight: 700;
+ 
+
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+
+ 
+width: 100%;
+
+padding: 13px 14px;
+
+border: 1px solid #d9cec6;
+
+border-radius: 7px;
+
+background: #fff;
+
+color: #2f2119;
+
+font-family: inherit;
+
+font-size: 0.95rem;
+
+outline: none;
+
+transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+ 
+
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+
+ 
+border-color: #b8794a;
+
+box-shadow:
+    0 0 0 3px rgba(184, 121, 74, 0.12);
+ 
+
+}
+
+.form-group textarea {
+
+ 
+resize: vertical;
+
+min-height: 120px;
+ 
+
+}
+
+.form-group small {
+
+ 
+color: #8a7c73;
+
+font-size: 0.78rem;
+ 
+
+}
+
+/* =========================================================
+PRIX + CATÉGORIE
+========================================================= */
+
+.form-row {
+
+ 
+display: grid;
+
+grid-template-columns:
+    1fr 1fr;
+
+gap: 20px;
+ 
+
+}
+
+.price-input {
+
+ 
+position: relative;
+ 
+
+}
+
+.price-input input {
+
+ 
+padding-right: 40px;
+ 
+
+}
+
+.price-input span {
+
+ 
+position: absolute;
+
+right: 14px;
+
+top: 50%;
+
+transform: translateY(-50%);
+
+color: #766960;
+
+font-weight: 600;
+
+pointer-events: none;
+ 
+
+}
+
+/* =========================================================
+BOUTONS
+========================================================= */
+
+.form-actions {
+
+ 
+margin-top: 10px;
+
+padding-top: 25px;
+
+display: flex;
+
+justify-content: flex-end;
+
+gap: 12px;
+
+border-top: 1px solid #eee5df;
+ 
+
+}
+
+.cancel-button,
+.submit-button {
+
+ 
+padding: 12px 18px;
+
+border-radius: 7px;
+
+font-family: inherit;
+
+font-size: 0.9rem;
+
+font-weight: 700;
+
+text-decoration: none;
+
+cursor: pointer;
+
+transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+ 
+
+}
+
+.cancel-button {
+
+ 
+border: 1px solid #d9cec6;
+
+background: white;
+
+color: #2f2119;
+ 
+
+}
+
+.submit-button {
+
+ 
+border: none;
+
+background: #2f2119;
+
+color: white;
+ 
+
+}
+
+.cancel-button:hover,
+.submit-button:hover {
+
+ 
+transform: translateY(-1px);
+
+opacity: 0.9;
+ 
+
+}
+
+/* =========================================================
+FOOTER
+========================================================= */
+
+footer {
+
+ 
+padding: 25px;
+
+background: #2f2119;
+
+color: #d9ccc4;
+
+text-align: center;
+
+font-size: 0.85rem;
+ 
+
+}
+
+/* =========================================================
+RESPONSIVE
+========================================================= */
+
+@media (max-width: 600px) {
+
+ 
+.navbar {
+
+    padding: 15px 20px;
+}
+
+
+.navigation {
+
+    gap: 10px;
+}
+
+
+.page {
+
+    padding: 35px 15px 60px;
+}
+
+
+.form-container {
+
+    padding: 30px 22px;
+}
+
+
+.form-header h1 {
+
+    font-size: 2rem;
+}
+
+
+.form-row {
+
+    grid-template-columns: 1fr;
+}
+
+
+.form-actions {
+
+    flex-direction: column-reverse;
+}
+
+
+.cancel-button,
+.submit-button {
+
+    width: 100%;
+
+    text-align: center;
+}
+ 
+
+}

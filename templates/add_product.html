@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+
+<head>
+
+ 
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>Bean & Brew — Ajouter un produit</title>
+
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='add_product.css') }}"
+>
+ 
+
+</head>
+
+<body>
+
+<!-- ==================================================
+     HEADER
+================================================== -->
+
+<header class="header">
+
+ 
+<nav class="navbar">
+
+    <a
+        href="{{ url_for('home') }}"
+        class="logo"
+    >
+        Bean<span>&</span>Brew
+    </a>
+
+
+    <div class="navigation">
+
+        <a
+            href="{{ url_for('seller') }}"
+            class="back-link"
+        >
+            ← Dashboard
+        </a>
+
+
+        <a
+            href="{{ url_for('logout') }}"
+            class="logout-button"
+        >
+            Déconnexion
+        </a>
+
+    </div>
+
+</nav>
+ 
+
+</header>
+
+<!-- ==================================================
+     FORMULAIRE
+================================================== -->
+
+<main class="page">
+
+ 
+<section class="form-container">
+
+
+    <div class="form-header">
+
+        <p class="eyebrow">
+            Gestion du menu
+        </p>
+
+
+        <h1>
+            Ajouter un produit
+        </h1>
+
+
+        <p>
+            Ajoutez une nouvelle boisson ou gourmandise
+            au menu de Bean & Brew.
+        </p>
+
+    </div>
+
+
+    <!-- MESSAGE D'ERREUR -->
+
+    {% if error %}
+
+    <div class="error-message">
+
+        {{ error }}
+
+    </div>
+
+    {% endif %}
+
+
+    <!-- FORMULAIRE -->
+
+    <form
+        action="{{ url_for('add_product') }}"
+        method="POST"
+        class="product-form"
+    >
+
+
+        <!-- NOM -->
+
+        <div class="form-group">
+
+            <label for="name">
+                Nom du produit
+            </label>
+
+
+            <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Ex : Caramel Latte"
+                maxlength="100"
+                required
+            >
+
+        </div>
+
+
+        <!-- DESCRIPTION -->
+
+        <div class="form-group">
+
+            <label for="description">
+                Description
+            </label>
+
+
+            <textarea
+                id="description"
+                name="description"
+                rows="5"
+                placeholder="Décrivez votre produit..."
+            ></textarea>
+
+        </div>
+
+
+        <!-- PRIX + CATÉGORIE -->
+
+        <div class="form-row">
+
+
+            <div class="form-group">
+
+                <label for="price">
+                    Prix
+                </label>
+
+
+                <div class="price-input">
+
+                    <input
+                        type="number"
+                        id="price"
+                        name="price"
+                        placeholder="4.90"
+                        min="0"
+                        step="0.01"
+                        required
+                    >
+
+
+                    <span>
+                        €
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="category_id">
+                    Catégorie
+                </label>
+
+
+                <select
+                    id="category_id"
+                    name="category_id"
+                    required
+                >
+
+                    <option
+                        value=""
+                        disabled
+                        selected
+                    >
+                        Sélectionner...
+                    </option>
+
+
+                    {% for category in categories %}
+
+                    <option
+                        value="{{ category.id }}"
+                    >
+                        {{ category.name }}
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <!-- IMAGE -->
+
+        <div class="form-group">
+
+            <label for="image">
+                URL de l'image
+            </label>
+
+
+            <input
+                type="url"
+                id="image"
+                name="image"
+                placeholder="https://exemple.com/image.jpg"
+            >
+
+
+            <small>
+                Collez ici le lien d'une image hébergée
+                sur Internet.
+            </small>
+
+        </div>
+
+
+        <!-- BOUTONS -->
+
+        <div class="form-actions">
+
+
+            <a
+                href="{{ url_for('seller') }}"
+                class="cancel-button"
+            >
+                Annuler
+            </a>
+
+
+            <button
+                type="submit"
+                class="submit-button"
+            >
+                + Ajouter le produit
+            </button>
+
+        </div>
+
+
+    </form>
+
+</section>
+ 
+
+</main>
+
+<!-- ==================================================
+     FOOTER
+================================================== -->
+
+<footer>
+
+ 
+<p>
+    © 2026 Bean & Brew — Espace vendeur
+</p>
+ 
+
+</footer>
+
+</body>
+
+</html>

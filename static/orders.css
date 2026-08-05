@@ -1,0 +1,466 @@
+/* ==================================================
+RESET
+================================================== */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  }
+
+body {
+
+ 
+font-family: Arial, sans-serif;
+
+background: #f7f3ef;
+
+color: #2f2119;
+ 
+
+}
+
+/* ==================================================
+HEADER
+================================================== */
+
+.header {
+
+ 
+background: #ffffff;
+
+border-bottom: 1px solid #eee5df;
+ 
+
+}
+
+.navbar {
+
+ 
+max-width: 1200px;
+
+margin: auto;
+
+padding: 20px;
+
+display: flex;
+
+align-items: center;
+
+justify-content: space-between;
+
+gap: 20px;
+ 
+
+}
+
+.logo {
+
+ 
+color: #2f2119;
+
+text-decoration: none;
+
+font-size: 1.6rem;
+
+font-weight: 700;
+ 
+
+}
+
+.logo span {
+
+ 
+color: #b8794a;
+ 
+
+}
+
+.nav-actions {
+
+ 
+display: flex;
+
+align-items: center;
+
+gap: 20px;
+ 
+
+}
+
+.back-button,
+.logout-button {
+
+ 
+color: #2f2119;
+
+text-decoration: none;
+
+font-size: 0.9rem;
+ 
+
+}
+
+.back-button:hover,
+.logout-button:hover {
+
+ 
+color: #b8794a;
+ 
+
+}
+
+.user-info {
+
+ 
+font-size: 0.9rem;
+
+font-weight: 600;
+ 
+
+}
+
+/* ==================================================
+PAGE
+================================================== */
+
+.orders-page {
+
+ 
+min-height: calc(100vh - 80px);
+
+padding: 70px 20px;
+ 
+
+}
+
+.orders-container {
+
+ 
+width: 100%;
+
+max-width: 900px;
+
+margin: auto;
+ 
+
+}
+
+/* ==================================================
+TITRE
+================================================== */
+
+.page-heading {
+
+ 
+margin-bottom: 40px;
+ 
+
+}
+
+.eyebrow {
+
+ 
+margin-bottom: 10px;
+
+color: #b8794a;
+
+font-size: 0.8rem;
+
+font-weight: 700;
+
+text-transform: uppercase;
+
+letter-spacing: 1.5px;
+ 
+
+}
+
+.page-heading h1 {
+
+ 
+margin-bottom: 10px;
+
+font-size: 2.5rem;
+ 
+
+}
+
+.page-heading p:last-child {
+
+ 
+color: #766960;
+ 
+
+}
+
+/* ==================================================
+COMMANDE
+================================================== */
+
+.orders-list {
+
+ 
+display: flex;
+
+flex-direction: column;
+
+gap: 20px;
+ 
+
+}
+
+.order-card {
+
+ 
+padding: 25px;
+
+background: #ffffff;
+
+border-radius: 10px;
+
+box-shadow:
+    0 5px 20px rgba(47, 33, 25, 0.06);
+ 
+
+}
+
+.order-header {
+
+ 
+display: flex;
+
+align-items: center;
+
+justify-content: space-between;
+
+padding-bottom: 20px;
+
+border-bottom: 1px solid #eee5df;
+ 
+
+}
+
+.order-header h2 {
+
+ 
+margin-bottom: 8px;
+
+font-size: 1.2rem;
+ 
+
+}
+
+.order-status {
+
+ 
+display: inline-block;
+
+padding: 5px 10px;
+
+border-radius: 20px;
+
+background: #f2e6dc;
+
+color: #8a5a3c;
+
+font-size: 0.75rem;
+
+font-weight: 600;
+
+text-transform: capitalize;
+ 
+
+}
+
+.order-price {
+
+ 
+font-size: 1.2rem;
+ 
+
+}
+
+/* ==================================================
+PRODUIT
+================================================== */
+
+.order-item {
+
+ 
+display: flex;
+
+align-items: center;
+
+justify-content: space-between;
+
+gap: 20px;
+
+padding-top: 20px;
+ 
+
+}
+
+.order-item h3 {
+
+ 
+margin-bottom: 5px;
+
+font-size: 1rem;
+ 
+
+}
+
+.order-item p {
+
+ 
+color: #766960;
+
+font-size: 0.9rem;
+ 
+
+}
+
+/* ==================================================
+AUCUNE COMMANDE
+================================================== */
+
+.empty-orders {
+
+ 
+padding: 70px 20px;
+
+background: #ffffff;
+
+border-radius: 10px;
+
+text-align: center;
+
+box-shadow:
+    0 5px 20px rgba(47, 33, 25, 0.06);
+ 
+
+}
+
+.empty-icon {
+
+ 
+margin-bottom: 20px;
+
+font-size: 3rem;
+ 
+
+}
+
+.empty-orders h2 {
+
+ 
+margin-bottom: 10px;
+ 
+
+}
+
+.empty-orders p {
+
+ 
+margin-bottom: 25px;
+
+color: #766960;
+ 
+
+}
+
+.menu-button {
+
+ 
+display: inline-block;
+
+padding: 12px 20px;
+
+border-radius: 6px;
+
+background: #2f2119;
+
+color: white;
+
+text-decoration: none;
+
+font-weight: 600;
+ 
+
+}
+
+.menu-button:hover {
+
+ 
+opacity: 0.9;
+ 
+
+}
+
+/* ==================================================
+MOBILE
+================================================== */
+
+@media (max-width: 700px) {
+
+ 
+.navbar {
+
+    align-items: flex-start;
+
+    flex-direction: column;
+
+}
+
+
+.nav-actions {
+
+    width: 100%;
+
+    flex-wrap: wrap;
+
+}
+
+
+.orders-page {
+
+    padding: 40px 15px;
+
+}
+
+
+.page-heading h1 {
+
+    font-size: 2rem;
+
+}
+
+
+.order-header {
+
+    align-items: flex-start;
+
+    gap: 15px;
+
+}
+ 
+
+}
+
+.order-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-top: 20px;
+    padding-top: 20px;
+
+    border-top: 1px solid #eee5df;
+
+    font-size: 1.05rem;
+}
+
+.order-total strong {
+    font-size: 1.2rem;
+}

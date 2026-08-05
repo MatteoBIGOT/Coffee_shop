@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+
+<head>
+
+ 
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>Bean & Brew — Dashboard vendeur</title>
+
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='seller.css') }}"
+>
+ 
+
+</head>
+
+<body>
+
+<!-- ==================================================
+     NAVIGATION
+================================================== -->
+
+<header class="header">
+
+ 
+<nav class="navbar">
+
+    <a
+        href="{{ url_for('home') }}"
+        class="logo"
+    >
+        Bean<span>&</span>Brew
+    </a>
+
+
+    <div class="seller-navigation">
+
+        <span class="seller-name">
+            👤 {{ session.get("username") }}
+        </span>
+
+
+        <a
+            href="{{ url_for('home') }}"
+            class="nav-link"
+        >
+            Accueil
+        </a>
+
+
+        <a
+            href="{{ url_for('logout') }}"
+            class="logout-button"
+        >
+            Déconnexion
+        </a>
+
+    </div>
+
+</nav>
+ 
+
+</header>
+
+<!-- ==================================================
+     DASHBOARD
+================================================== -->
+
+<main class="dashboard">
+
+ 
+<!-- ==================================================
+     TITRE
+================================================== -->
+
+<div class="dashboard-header">
+
+    <div>
+
+        <p class="eyebrow">
+            Bean & Brew
+        </p>
+
+        <h1>
+            Dashboard vendeur
+        </h1>
+
+        <p>
+            Gérez les commandes de vos clients.
+        </p>
+
+    </div>
+
+
+    <div class="dashboard-actions">
+
+        <a
+            href="{{ url_for('add_product') }}"
+            class="add-product-button"
+        >
+            + Ajouter un produit
+        </a>
+
+
+        <div class="order-count">
+
+            <span>
+                Commandes actives
+            </span>
+
+            <strong>
+                {{ orders|length }}
+            </strong>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ==================================================
+     STATISTIQUES
+================================================== -->
+
+<section class="dashboard-stats">
+
+
+    <!-- EN ATTENTE -->
+
+    <div class="stat-card pending-card">
+
+        <span class="stat-icon">
+            🟠
+        </span>
+
+        <div>
+
+            <span>
+                En attente
+            </span>
+
+            <strong>
+                {{ pending_count }}
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <!-- EN PRÉPARATION -->
+
+    <div class="stat-card preparing-card">
+
+        <span class="stat-icon">
+            🔵
+        </span>
+
+        <div>
+
+            <span>
+                En préparation
+            </span>
+
+            <strong>
+                {{ preparing_count }}
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <!-- PRÊTES -->
+
+    <div class="stat-card ready-card">
+
+        <span class="stat-icon">
+            🟢
+        </span>
+
+        <div>
+
+            <span>
+                Prêtes
+            </span>
+
+            <strong>
+                {{ ready_count }}
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <!-- ANNULÉES -->
+
+    <div class="stat-card cancelled-card">
+
+        <span class="stat-icon">
+            🔴
+        </span>
+
+        <div>
+
+            <span>
+                Annulées
+            </span>
+
+            <strong>
+                {{ cancelled_count }}
+            </strong>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ==================================================
+     COMMANDES
+================================================== -->
+
+<section class="orders-section">
+
+
+    {% if orders %}
+
+        <div class="orders-grid">
+
+
+            {% for order in orders %}
+
+                <article class="order-card">
+
+
+                    <!-- HEADER COMMANDE -->
+
+                    <div class="order-header">
+
+                        <div>
+
+                            <span class="order-number">
+                                Commande #{{ order.order_id }}
+                            </span>
+
+                            <h2>
+                                {{ order.username }}
+                            </h2>
+
+                        </div>
+
+
+                        <span
+                            class="status status-{{ order.state }}"
+                        >
+
+                            {% if order.state == "pending" %}
+
+                                En attente
+
+                            {% elif order.state == "preparing" %}
+
+                                En préparation
+
+                            {% elif order.state == "ready" %}
+
+                                Prête
+
+                            {% elif order.state == "done" %}
+
+                                Terminée
+
+                            {% elif order.state == "cancelled" %}
+
+                                Annulée
+
+                            {% else %}
+
+                                {{ order.state }}
+
+                            {% endif %}
+
+                        </span>
+
+                    </div>
+
+
+                    <!-- PRODUITS -->
+
+                    <div class="order-products">
+
+
+                        {% for item in order["items"] %}
+
+                            <div class="order-product">
+
+                                <div class="product-details">
+
+                                    <strong>
+                                        {{ item.product_name }}
+                                    </strong>
+
+                                    <span>
+                                        {{ item.quantity }}
+                                        ×
+                                        {{ "%.2f"|format(item.unit_price) }} €
+                                    </span>
+
+                                </div>
+
+
+                                <strong class="product-total">
+
+                                    {{
+                                        "%.2f"|format(
+                                            item.quantity * item.unit_price
+                                        )
+                                    }} €
+
+                                </strong>
+
+                            </div>
+
+                        {% endfor %}
+
+
+                    </div>
+
+
+                    <!-- TOTAL -->
+
+                    <div class="order-total">
+
+                        <span>
+                            Total
+                        </span>
+
+                        <strong>
+                            {{ "%.2f"|format(order.price) }} €
+                        </strong>
+
+                    </div>
+
+
+                    <!-- MODIFICATION STATUT -->
+
+                    <form
+                        class="status-form"
+                        action="{{ url_for(
+                            'update_order_status',
+                            order_id=order.order_id
+                        ) }}"
+                        method="POST"
+                    >
+
+                        <label
+                            for="state-{{ order.order_id }}"
+                        >
+                            Modifier le statut
+                        </label>
+
+
+                        <div class="status-actions">
+
+                            <select
+                                id="state-{{ order.order_id }}"
+                                name="state"
+                            >
+
+                                <option
+                                    value="pending"
+                                    {% if order.state == "pending" %}
+                                        selected
+                                    {% endif %}
+                                >
+                                    En attente
+                                </option>
+
+
+                                <option
+                                    value="preparing"
+                                    {% if order.state == "preparing" %}
+                                        selected
+                                    {% endif %}
+                                >
+                                    En préparation
+                                </option>
+
+
+                                <option
+                                    value="ready"
+                                    {% if order.state == "ready" %}
+                                        selected
+                                    {% endif %}
+                                >
+                                    Prête
+                                </option>
+
+
+                                <option
+                                    value="done"
+                                    {% if order.state == "done" %}
+                                        selected
+                                    {% endif %}
+                                >
+                                    Terminée
+                                </option>
+
+
+                                <option
+                                    value="cancelled"
+                                    {% if order.state == "cancelled" %}
+                                        selected
+                                    {% endif %}
+                                >
+                                    Annulée
+                                </option>
+
+                            </select>
+
+
+                            <button type="submit">
+                                Mettre à jour
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </article>
+
+            {% endfor %}
+
+        </div>
+
+
+    {% else %}
+
+        <div class="empty-orders">
+
+            <div class="empty-icon">
+                ☕
+            </div>
+
+            <h2>
+                Aucune commande
+            </h2>
+
+            <p>
+                Les nouvelles commandes de vos clients
+                apparaîtront ici.
+            </p>
+
+        </div>
+
+    {% endif %}
+
+
+</section>
+
+
+<!-- ==================================================
+     GESTION DU MENU
+================================================== -->
+
+<section class="products-management">
+
+
+    <div class="management-header">
+
+        <div>
+
+            <p class="eyebrow">
+                Gestion du menu
+            </p>
+
+            <h2>
+                Produits
+            </h2>
+
+            <p>
+                Modifiez ou gérez la disponibilité des produits.
+            </p>
+
+        </div>
+
+
+        <a
+            href="{{ url_for('add_product') }}"
+            class="add-product-button"
+        >
+            + Ajouter un produit
+        </a>
+
+    </div>
+
+
+    <div class="products-management-grid">
+
+
+        {% for product in products %}
+
+
+            <article
+                class="management-product
+                {% if not product.active %}
+                    product-inactive
+                {% endif %}"
+            >
+
+
+                <!-- IMAGE -->
+
+                <div class="management-product-image">
+
+                    {% if product.image %}
+
+                        <img
+                            src="{{ product.image }}"
+                            alt="{{ product.name }}"
+                        >
+
+                    {% else %}
+
+                        <span>
+                            ☕
+                        </span>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- INFORMATIONS -->
+
+                <div class="management-product-info">
+
+
+                    <div class="management-product-title">
+
+                        <h3>
+                            {{ product.name }}
+                        </h3>
+
+                        <strong>
+                            {{ "%.2f"|format(product.price) }} €
+                        </strong>
+
+                    </div>
+
+
+                    <span class="product-category">
+
+                        {{ product.category_name }}
+
+                    </span>
+
+
+                    <!-- STATUT -->
+
+                    {% if product.active %}
+
+                        <span class="product-status active">
+                            🟢 Actif
+                        </span>
+
+                    {% else %}
+
+                        <span class="product-status inactive">
+                            🔴 Indisponible
+                        </span>
+
+                    {% endif %}
+
+
+                    <p>
+
+                        {{ product.description or
+                           "Aucune description." }}
+
+                    </p>
+
+
+                    <!-- ACTIONS -->
+
+                    <div class="product-management-actions">
+
+
+                        <a
+                            href="{{ url_for(
+                                'edit_product',
+                                product_id=product.id
+                            ) }}"
+                            class="edit-button"
+                        >
+                            ✏️ Modifier
+                        </a>
+
+
+                        <form
+                            action="{{ url_for(
+                                'toggle_product',
+                                product_id=product.id
+                            ) }}"
+                            method="POST"
+                        >
+
+                            {% if product.active %}
+
+                                <button
+                                    type="submit"
+                                    class="disable-button"
+                                >
+                                    🔴 Désactiver
+                                </button>
+
+                            {% else %}
+
+                                <button
+                                    type="submit"
+                                    class="enable-button"
+                                >
+                                    🟢 Réactiver
+                                </button>
+
+                            {% endif %}
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+        {% else %}
+
+
+            <div class="empty-products">
+
+                <span>
+                    ☕
+                </span>
+
+                <h3>
+                    Aucun produit
+                </h3>
+
+                <p>
+                    Ajoutez votre premier produit au menu.
+                </p>
+
+            </div>
+
+
+        {% endfor %}
+
+
+    </div>
+
+</section>
+ 
+
+</main>
+
+<!-- ==================================================
+     FOOTER
+================================================== -->
+
+<footer>
+
+ 
+<p>
+    © 2026 Bean & Brew — Espace vendeur
+</p>
+ 
+
+</footer>
+
+</body>
+
+</html>

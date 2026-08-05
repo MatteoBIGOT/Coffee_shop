@@ -1,27 +1,534 @@
 <!DOCTYPE html>
+
 <html lang="fr">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mon premier site Python</title>
+
+ 
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>Bean & Brew — Coffee Shop</title>
+
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='index.css') }}"
+>
+ 
+
 </head>
 
 <body>
 
-    <h1>Mon premier site avec Python 🚀</h1>
+<!-- ==================== NAVIGATION ==================== -->
 
-    <p>Clique sur le bouton ci-dessous :</p>
+<header class="header">
 
-    <button id="btn">Clique ici</button>
+ 
+<nav class="navbar">
 
-    <button id="btn2">Clique ici aussi</button>
+    <a href="#" class="logo">
+        Bean<span>&</span>Brew
+    </a>
 
-    <p id="texte"></p>
 
-    <p id="texte2"></p>
+    <ul class="nav-links">
 
-    <script src="/static/script.js"></script>
+        <li>
+            <a href="#home">
+                Accueil
+            </a>
+        </li>
+
+        <li>
+            <a href="#menu">
+                Notre menu
+            </a>
+        </li>
+
+        <li>
+            <a href="#about">
+                À propos
+            </a>
+        </li>
+
+        <li>
+            <a href="#contact">
+                Contact
+            </a>
+        </li>
+
+    </ul>
+
+
+    <!-- ==================== UTILISATEUR ==================== -->
+
+    <div class="nav-actions">
+
+        {% if session.get("user_id") %}
+
+            <span class="user-info">
+                👤 {{ session.get("username") }}
+            </span>
+
+
+            {% if session.get("role") == "seller" %}
+
+                <a
+                    href="{{ url_for('seller') }}"
+                    class="orders-link"
+                >
+                    📊 Dashboard vendeur
+                </a>
+
+            {% else %}
+
+                <a
+                    href="{{ url_for('my_orders') }}"
+                    class="orders-link"
+                >
+                    📋 Mes commandes
+                </a>
+
+            {% endif %}
+
+
+            <a
+                href="{{ url_for('logout') }}"
+                class="nav-button"
+            >
+                Déconnexion
+            </a>
+
+        {% else %}
+
+            <a
+                href="{{ url_for('login') }}"
+                class="nav-button"
+            >
+                🔐 Connexion
+            </a>
+
+        {% endif %}
+
+    </div>
+
+</nav>
+ 
+
+</header>
+
+<!-- ==================== HERO ==================== -->
+
+<main>
+
+ 
+<section id="home" class="hero">
+
+
+    <div class="hero-content">
+
+        <p class="eyebrow">
+            ☕ Specialty Coffee
+        </p>
+
+
+        <h1>
+            Votre café.<br>
+            <span>Votre moment.</span>
+        </h1>
+
+
+        <p class="hero-description">
+            Des cafés soigneusement sélectionnés,
+            des pâtisseries artisanales et une ambiance
+            pensée pour vous faire ralentir.
+        </p>
+
+
+        <div class="hero-buttons">
+
+            <a
+                href="#menu"
+                class="btn btn-primary"
+            >
+                Découvrir le menu
+            </a>
+
+
+            <a
+                href="#about"
+                class="btn btn-secondary"
+            >
+                Notre histoire
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- IMAGE HERO -->
+
+    <div class="hero-image">
+
+        <div class="coffee-card">
+
+            <p>
+                Notre spécialité
+            </p>
+
+            <h3>
+                Caramel Latte
+            </h3>
+
+            <span>
+                4,90 €
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ==================== MENU ==================== -->
+
+<section
+    id="menu"
+    class="menu-section"
+>
+
+
+    <div class="section-heading">
+
+        <p class="eyebrow">
+            Notre sélection
+        </p>
+
+
+        <h2>
+            Le menu
+        </h2>
+
+
+        <p>
+            Découvrez notre sélection de boissons
+            et de gourmandises.
+        </p>
+
+    </div>
+
+
+    <div class="products">
+
+
+        {% for product in products %}
+
+
+        <article class="product-card">
+
+
+            <div class="product-image">
+                ☕
+            </div>
+
+
+            <div class="product-info">
+
+
+                <div class="product-title">
+
+                    <h3>
+                        {{ product.product_name }}
+                    </h3>
+
+
+                    <strong>
+                        {{ "%.2f"|format(product.product_price) }} €
+                    </strong>
+
+                </div>
+
+
+                <p class="product-category">
+                    {{ product.category_name }}
+                </p>
+
+
+                <p>
+                    {{ product.product_description }}
+                </p>
+
+
+                <button
+                    class="add-button"
+                    data-product-id="{{ product.product_id }}"
+                    data-product-name="{{ product.product_name }}"
+                    data-product-price="{{ product.product_price }}"
+                >
+                    Ajouter
+                </button>
+
+
+            </div>
+
+        </article>
+
+
+        {% endfor %}
+
+
+    </div>
+
+</section>
+
+
+<!-- ==================== ABOUT ==================== -->
+
+<section
+    id="about"
+    class="about-section"
+>
+
+
+    <div class="about-image">
+
+        <span>
+            BEAN & BREW
+        </span>
+
+    </div>
+
+
+    <div class="about-content">
+
+        <p class="eyebrow">
+            Notre histoire
+        </p>
+
+
+        <h2>
+            Plus qu'un café,<br>
+            <span>un lieu de vie.</span>
+        </h2>
+
+
+        <p>
+            Bean & Brew est né d'une idée simple :
+            créer un endroit où l'on peut prendre le temps
+            de savourer un bon café.
+        </p>
+
+
+        <p>
+            Nous sélectionnons nos grains auprès de
+            producteurs passionnés et préparons chaque
+            boisson avec attention.
+        </p>
+
+
+        <a
+            href="#contact"
+            class="text-link"
+        >
+            Venez nous rencontrer →
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- ==================== CTA ==================== -->
+
+<section class="cta">
+
+    <div>
+
+        <p class="eyebrow">
+            Une petite pause ?
+        </p>
+
+
+        <h2>
+            Votre prochain café<br>
+            vous attend.
+        </h2>
+
+    </div>
+
+
+    <a
+        href="#menu"
+        class="btn btn-primary"
+    >
+        Voir le menu
+    </a>
+
+</section>
+ 
+
+</main>
+
+<!-- ==================== PANIER ==================== -->
+
+<aside
+    id="cart"
+    class="cart"
+>
+
+ 
+<div class="cart-header">
+
+    <h2>
+        Votre panier
+    </h2>
+
+
+    <button
+        type="button"
+        id="close-cart"
+    >
+        ×
+    </button>
+
+</div>
+
+
+<div id="cart-items">
+
+    <p>
+        Votre panier est vide.
+    </p>
+
+</div>
+
+
+<div class="cart-footer">
+
+
+    <div class="cart-total">
+
+        <span>
+            Total
+        </span>
+
+
+        <strong id="cart-total">
+            0.00 €
+        </strong>
+
+    </div>
+
+
+    <button
+        type="button"
+        id="order-button"
+    >
+        Passer la commande
+    </button>
+
+</div>
+ 
+
+</aside>
+
+<!-- ==================== BOUTON PANIER ==================== -->
+
+<button
+type="button"
+id="cart-button"
+class="cart-button"
+
+>
+
+ 
+🛒 Panier
+
+<span id="cart-count">
+    0
+</span>
+ 
+
+</button>
+
+<!-- ==================== FOOTER ==================== -->
+
+<footer id="contact">
+
+ 
+<div class="footer-content">
+
+
+    <div>
+
+        <a
+            href="#"
+            class="logo"
+        >
+            Bean<span>&</span>Brew
+        </a>
+
+
+        <p>
+            Specialty coffee & good vibes.
+        </p>
+
+    </div>
+
+
+    <div>
+
+        <h4>
+            Nous trouver
+        </h4>
+
+
+        <p>
+            12 rue du Café<br>
+            41100 Vendôme
+        </p>
+
+    </div>
+
+
+    <div>
+
+        <h4>
+            Horaires
+        </h4>
+
+
+        <p>
+            Lun — Ven : 8h — 18h<br>
+            Sam — Dim : 9h — 19h
+        </p>
+
+    </div>
+
+</div>
+
+
+<div class="footer-bottom">
+
+    <p>
+        © 2026 Bean & Brew — Tous droits réservés
+    </p>
+
+</div>
+ 
+
+</footer>
+
+<!-- ==================== JAVASCRIPT ==================== -->
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
 
 </body>
 

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+
+<head>
+
+ 
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Créer un compte — Bean & Brew</title>
+
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='register.css') }}"
+>
+ 
+
+</head>
+
+<body>
+
+ 
+<main class="register-page">
+
+    <div class="register-container">
+
+
+        <!-- LOGO -->
+
+        <a href="{{ url_for('home') }}" class="logo">
+            Bean<span>&</span>Brew
+        </a>
+
+
+        <!-- FORMULAIRE -->
+
+        <div class="register-card">
+
+            <p class="eyebrow">
+                Bienvenue chez Bean & Brew
+            </p>
+
+            <h1>
+                Créer un compte
+            </h1>
+
+            <p class="register-description">
+                Créez votre compte pour pouvoir passer
+                et suivre vos commandes.
+            </p>
+
+
+            <!-- MESSAGE D'ERREUR -->
+
+            {% if error %}
+
+                <div class="error-message">
+                    {{ error }}
+                </div>
+
+            {% endif %}
+
+
+            <form
+                action="{{ url_for('register') }}"
+                method="POST"
+            >
+
+
+                <!-- USERNAME -->
+
+                <div class="form-group">
+
+                    <label for="username">
+                        Nom d'utilisateur
+                    </label>
+
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Votre nom d'utilisateur"
+                        maxlength="50"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- EMAIL -->
+
+                <div class="form-group">
+
+                    <label for="email">
+                        Adresse email
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="exemple@email.com"
+                        maxlength="255"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- MOT DE PASSE -->
+
+                <div class="form-group">
+
+                    <label for="password">
+                        Mot de passe
+                    </label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Votre mot de passe"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- CONFIRMATION -->
+
+                <div class="form-group">
+
+                    <label for="confirm_password">
+                        Confirmer le mot de passe
+                    </label>
+
+                    <input
+                        type="password"
+                        id="confirm_password"
+                        name="confirm_password"
+                        placeholder="Confirmez votre mot de passe"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- BOUTON -->
+
+                <button
+                    type="submit"
+                    class="register-button"
+                >
+                    Créer mon compte
+                </button>
+
+            </form>
+
+
+            <!-- CONNEXION -->
+
+            <p class="login-link">
+
+                Déjà un compte ?
+
+                <a href="{{ url_for('login') }}">
+                    Se connecter
+                </a>
+
+            </p>
+
+        </div>
+
+    </div>
+
+</main>
+ 
+
+</body>
+
+</html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+
+<head>
+
+ 
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>Mes commandes — Bean & Brew</title>
+
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='orders.css') }}"
+>
+ 
+
+</head>
+
+<body>
+
+ 
+<header class="header">
+
+    <nav class="navbar">
+
+        <a href="{{ url_for('home') }}" class="logo">
+            Bean<span>&</span>Brew
+        </a>
+
+        <div class="nav-actions">
+
+            <a
+                href="{{ url_for('home') }}"
+                class="back-button"
+            >
+                ← Retour au menu
+            </a>
+
+            <span class="user-info">
+                👤 {{ session.get("username") }}
+            </span>
+
+            <a
+                href="{{ url_for('logout') }}"
+                class="logout-button"
+            >
+                Déconnexion
+            </a>
+
+        </div>
+
+    </nav>
+
+</header>
+
+
+<main class="orders-page">
+
+    <div class="orders-container">
+
+        <div class="page-heading">
+
+            <p class="eyebrow">
+                Bean & Brew
+            </p>
+
+            <h1>
+                Mes commandes
+            </h1>
+
+            <p>
+                Retrouvez ici l'historique de vos commandes.
+            </p>
+
+        </div>
+
+
+        {% if orders %}
+
+            <div class="orders-list">
+
+                {% for order in orders %}
+
+                    <article class="order-card">
+
+                        <!-- EN-TÊTE -->
+
+                        <div class="order-header">
+
+                            <div>
+
+                                <h2>
+                                    Commande #{{ order.order_id }}
+                                </h2>
+
+                                <span class="order-status">
+                                    {{ order.state }}
+                                </span>
+
+                            </div>
+
+                            <strong class="order-price">
+                                {{ "%.2f"|format(order.price) }} €
+                            </strong>
+
+                        </div>
+
+
+                        <!-- PRODUITS -->
+
+                        <div class="order-items">
+
+                            {% for item in order["items"] %}
+
+                                <div class="order-item">
+
+                                    <div>
+
+                                        <h3>
+                                            {{ item.product_name }}
+                                        </h3>
+
+                                        <p>
+                                            {{ item.quantity }}
+                                            ×
+                                            {{ "%.2f"|format(item.unit_price) }} €
+                                        </p>
+
+                                    </div>
+
+                                    <strong>
+
+                                        {{
+                                            "%.2f"|format(
+                                                item.unit_price
+                                                * item.quantity
+                                            )
+                                        }} €
+
+                                    </strong>
+
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+
+                        <!-- TOTAL -->
+
+                        <div class="order-total">
+
+                            <span>
+                                Total
+                            </span>
+
+                            <strong>
+                                {{ "%.2f"|format(order.price) }} €
+                            </strong>
+
+                        </div>
+
+                    </article>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="empty-orders">
+
+                <div class="empty-icon">
+                    ☕
+                </div>
+
+                <h2>
+                    Aucune commande
+                </h2>
+
+                <p>
+                    Vous n'avez pas encore passé de commande.
+                </p>
+
+                <a
+                    href="{{ url_for('home') }}#menu"
+                    class="menu-button"
+                >
+                    Découvrir le menu
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</main>
+ 
+
+</body>
+
+</html>
