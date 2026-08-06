@@ -507,7 +507,7 @@ def seller():
             JOIN products
                 ON order_items.product_id = products.id
 
-            WHERE orders.state != 'done'
+            WHERE orders.state NOT IN ('done', 'cancelled')
 
             ORDER BY orders.id DESC
         """)
@@ -554,14 +554,14 @@ def seller():
 
         cursor.execute("""
             SELECT
-                state,
+                orders.state,
                 COUNT(*) AS total
 
             FROM orders
 
-            WHERE state != 'done'
+            WHERE orders.state NOT IN ('done', 'cancelled')
 
-            GROUP BY state
+            GROUP BY orders.state
         """)
 
         status_rows = cursor.fetchall()
@@ -708,6 +708,145 @@ def update_order_status(order_id):
         cursor.close()
 
     return redirect(url_for("seller"))
+
+@app.route("/seller/archive")
+def seller_archive():
+
+    # Vérification de connexion
+    if "user_id" not in session:
+        return redirect(url_for("login"))
+
+    # Vérification du rôle vendeur
+    if session.get("role") != "seller":
+        return redirect(url_for("home"))
+
+    # Récupération de la recherche
+    search = request.args.get("search", "").strip()
+
+    cursor = db.cursor(dictionary=True)
+
+    try:
+
+        # ==================================================
+        # RÉCUPÉRATION DES COMMANDES ARCHIVÉES
+        # ==================================================
+
+        query = """
+            SELECT
+                orders.id AS order_id,
+                orders.state,
+                orders.price,
+                users.username,
+                order_items.product_id,
+                order_items.quantity,
+                order_items.unit_price,
+                products.name AS product_name
+
+            FROM orders
+
+            JOIN users
+                ON orders.user_id = users.id
+
+            JOIN order_items
+                ON orders.id = order_items.order_id
+
+            JOIN products
+                ON order_items.product_id = products.id
+
+            WHERE orders.state IN ('done', 'cancelled')
+        """
+
+        params = []
+
+
+        # ==================================================
+        # RECHERCHE
+        # ==================================================
+
+        if search:
+
+            query += """
+                AND (
+                    CAST(orders.id AS CHAR) LIKE %s
+                    OR users.username LIKE %s
+                    OR orders.state LIKE %s
+                )
+            """
+
+            search_value = f"%{search}%"
+
+            params.extend([
+                search_value,
+                search_value,
+                search_value
+            ])
+
+
+        query += """
+            ORDER BY orders.id DESC
+        """
+
+
+        cursor.execute(query, params)
+
+        rows = cursor.fetchall()
+
+
+        # ==================================================
+        # REGROUPEMENT DES PRODUITS PAR COMMANDE
+        # ==================================================
+
+        orders = {}
+
+        for row in rows:
+
+            order_id = row["order_id"]
+
+            if order_id not in orders:
+
+                orders[order_id] = {
+                    "order_id": order_id,
+                    "username": row["username"],
+                    "state": row["state"],
+                    "price": row["price"],
+                    "items": []
+                }
+
+
+            orders[order_id]["items"].append({
+                "product_id": row["product_id"],
+                "product_name": row["product_name"],
+                "quantity": row["quantity"],
+                "unit_price": row["unit_price"]
+            })
+
+
+        orders = list(orders.values())
+
+
+        # ==================================================
+        # AFFICHAGE
+        # ==================================================
+
+        return render_template(
+            "archive.html",
+            orders=orders,
+            search=search
+        )
+
+
+    except mysql.connector.Error as error:
+
+        print("Erreur archives vendeur :", error)
+
+        return "Une erreur est survenue.", 500
+
+
+    finally:
+
+        cursor.close()
+ 
+
 
 # ==================================================
 # LANCEMENT

@@ -924,3 +924,104 @@ RESPONSIVE
  
 
 }
+
+ css
+/* ==================================================
+   RECHERCHE ARCHIVES
+================================================== */
+
+.archive-search {
+    margin-bottom: 30px;
+}
+
+
+.archive-search-form {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+}
+
+
+.archive-search-form input {
+    flex: 1;
+    padding: 14px 18px;
+
+    border: 1px solid #ddd;
+    border-radius: 12px;
+
+    font-size: 15px;
+
+    background: white;
+}
+
+
+.archive-search-form input:focus {
+    outline: none;
+    border-color: #c9a227;
+    box-shadow: 0 0 0 3px rgba(201, 162, 39, 0.12);
+}
+
+
+.archive-search-form button {
+    padding: 14px 22px;
+
+    border: none;
+    border-radius: 12px;
+
+    background: #1e3a5f;
+    color: white;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+
+.archive-search-form button:hover {
+    transform: translateY(-1px);
+    opacity: 0.9;
+}
+
+
+.clear-search {
+    padding: 14px 18px;
+
+    border-radius: 12px;
+
+    background: #eee;
+    color: #333;
+
+    text-decoration: none;
+
+    font-size: 14px;
+}
+
+
+.clear-search:hover {
+    background: #ddd;
+}
+
+
+/* ==================================================
+   RESPONSIVE
+================================================== */
+
+@media (max-width: 700px) {
+
+    .archive-search-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+
+    .archive-search-form button,
+    .clear-search {
+        text-align: center;
+    }
+
+}
+ 

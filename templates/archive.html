@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Bean & Brew — Archives</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='seller.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+
+<header class="header">
+
+    <nav class="navbar">
+
+        <a
+            href="{{ url_for('home') }}"
+            class="logo"
+        >
+            Bean<span>&</span>Brew
+        </a>
+
+
+        <div class="seller-navigation">
+
+            <span class="seller-name">
+                👤 {{ session.get("username") }}
+            </span>
+
+
+            <a
+                href="{{ url_for('seller') }}"
+                class="nav-link"
+            >
+                Dashboard
+            </a>
+
+
+            <a
+                href="{{ url_for('logout') }}"
+                class="logout-button"
+            >
+                Déconnexion
+            </a>
+
+        </div>
+
+    </nav>
+
+</header>
+
+
+<main class="dashboard">
+
+
+    <div class="dashboard-header">
+
+        <div>
+
+            <p class="eyebrow">
+                Bean & Brew
+            </p>
+
+            <h1>
+                Archives des commandes
+            </h1>
+
+            <p>
+                Retrouvez les commandes terminées et annulées.
+            </p>
+
+        </div>
+
+
+        <div class="dashboard-actions">
+
+            <a
+                href="{{ url_for('seller') }}"
+                class="add-product-button"
+            >
+                ← Retour au dashboard
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- ==================================================
+        RECHERCHE
+    ================================================== -->
+
+    <section class="archive-search">
+
+        <form
+            action="{{ url_for('seller_archive') }}"
+            method="GET"
+            class="archive-search-form"
+        >
+
+            <input
+                type="text"
+                name="search"
+                value="{{ search }}"
+                placeholder="Rechercher une commande, un client..."
+            >
+
+            <button type="submit">
+                🔎 Rechercher
+            </button>
+
+            {% if search %}
+
+                <a
+                    href="{{ url_for('seller_archive') }}"
+                    class="clear-search"
+                >
+                    ✕ Effacer
+                </a>
+
+            {% endif %}
+
+        </form>
+
+    </section>
+ 
+
+
+    <section class="orders-section">
+
+
+        {% if orders %}
+
+
+            <div class="orders-grid">
+
+
+                {% for order in orders %}
+
+
+                <article class="order-card">
+
+
+                    <!-- HEADER -->
+
+                    <div class="order-header">
+
+                        <div>
+
+                            <span class="order-number">
+                                Commande #{{ order.order_id }}
+                            </span>
+
+
+                            <h2>
+                                {{ order.username }}
+                            </h2>
+
+                        </div>
+
+
+                        <span
+                            class="status status-{{ order.state }}"
+                        >
+
+                            {% if order.state == "done" %}
+
+                                Terminée
+
+                            {% elif order.state == "cancelled" %}
+
+                                Annulée
+
+                            {% endif %}
+
+                        </span>
+
+                    </div>
+
+
+                    <!-- PRODUITS -->
+
+                    <div class="order-products">
+
+
+                        {% for item in order["items"] %}
+
+
+                        <div class="order-product">
+
+
+                            <div class="product-details">
+
+                                <strong>
+                                    {{ item.product_name }}
+                                </strong>
+
+
+                                <span>
+
+                                    {{ item.quantity }}
+                                    ×
+                                    {{ "%.2f"|format(item.unit_price) }} €
+
+                                </span>
+
+                            </div>
+
+
+                            <strong class="product-total">
+
+                                {{
+                                    "%.2f"|format(
+                                        item.quantity * item.unit_price
+                                    )
+                                }} €
+
+                            </strong>
+
+
+                        </div>
+
+
+                        {% endfor %}
+
+
+                    </div>
+
+
+                    <!-- TOTAL -->
+
+                    <div class="order-total">
+
+                        <span>
+                            Total
+                        </span>
+
+
+                        <strong>
+                            {{ "%.2f"|format(order.price) }} €
+                        </strong>
+
+                    </div>
+
+
+                </article>
+
+
+                {% endfor %}
+
+
+            </div>
+
+
+        {% else %}
+
+
+            <div class="empty-orders">
+
+                <div class="empty-icon">
+                    📦
+                </div>
+
+
+                <h2>
+                    Aucune commande archivée
+                </h2>
+
+
+                <p>
+                    Les commandes terminées ou annulées
+                    apparaîtront ici.
+                </p>
+
+            </div>
+
+
+        {% endif %}
+
+
+    </section>
+
+
+</main>
+
+
+<footer>
+
+    <p>
+        © 2026 Bean & Brew — Archives
+    </p>
+
+</footer>
+
+
+</body>
+
+</html>
